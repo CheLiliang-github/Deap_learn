@@ -99,7 +99,7 @@ for i in range(epoch):
             loss = loss_fn(outputs, targets)
             total_test_loss = total_test_loss + loss.item()
 
-            accuracy = (outputs.argmax(1) == targets).sum()
+            accuracy = (outputs.argmax(1) == targets).sum()  # argmax(1)横向比较，输出最大值
             total_accuracy = total_accuracy + accuracy
 
     print("整体测试集上的Loss: {}".format(total_test_loss))
@@ -107,5 +107,8 @@ for i in range(epoch):
     writer.add_scalar("test_loss", total_test_loss, total_test_step)
     writer.add_scalar("test_accuracy", total_accuracy/test_data_size, total_test_step)
     total_test_step = total_test_step + 1
+
+    torch.save(cll, "cll_{}.pth".format(i))
+    print("模型已保存")
 
 writer.close()
